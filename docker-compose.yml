@@ -1,0 +1,21 @@
+version: "2"
+services:
+  spring-batch:
+    image: akkis-mini-project
+    ports:
+      - "8081:8085"
+    networks:
+      - spring-miniproject1
+    depends_on:
+      - mysql-standalone
+
+  mysql-standalone:
+    image: mysql:8
+    networks:
+      - spring-miniproject1
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass1234
+      - MYSQL_DATABASE=batchprocessing
+
+networks:
+  spring-miniproject1:
