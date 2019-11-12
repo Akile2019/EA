@@ -1,0 +1,31 @@
+version: "2"
+services:
+  order:
+    image: order
+    ports:
+      - "8082:9091"
+    networks:
+      - spring-miniproject2
+    depends_on:
+      - mysql-standalone
+      - product
+
+  product:
+    image: product
+    networks:
+      - spring-miniproject2
+    depends_on:
+      - mysql-standalone
+
+  mysql-standalone:
+    image: mysql:8
+    security_opt:
+      - seccomp:unconfined
+    networks:
+      - spring-miniproject2
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass1234
+      - MYSQL_DATABASE=order-service-db
+
+networks:
+  spring-miniproject2:
